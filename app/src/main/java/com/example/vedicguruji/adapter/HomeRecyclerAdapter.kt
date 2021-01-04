@@ -1,18 +1,23 @@
 package com.example.vedicguruji.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vedicguruji.R
+import com.example.vedicguruji.activity.DescriptionActivity
 import com.example.vedicguruji.model.Expert
 import com.squareup.picasso.Picasso
 import java.util.*
 
 class HomeRecyclerAdapter(
+
     val context :Context,
 val itemList : ArrayList<Expert>
 ) : RecyclerView.Adapter<HomeRecyclerAdapter.HomeViewHolder>() {
@@ -37,6 +42,8 @@ val itemList : ArrayList<Expert>
 
 
 
+
+
         finalImg   = img.substring(0,7) + img.substring(7,16) + img.substring(16)
 
 
@@ -54,16 +61,21 @@ val itemList : ArrayList<Expert>
 
         Picasso.get().load(image).error(R.drawable.people_icon).into(holder.imgExpert)
 
-//        holder.rlContent.setOnClickListener {
-//
-//
-//
-//            val intent = Intent(context , DescriptionActivity::class.java)
-//            intent.putExtra("book_id" , book.bookId)
-//            context.startActivity(intent)
-//
-//
-//        }
+        holder.llContainer.setOnClickListener {
+
+
+
+            val intent = Intent(context , DescriptionActivity::class.java)
+            intent.putExtra("exp_name" , expert.expert_name)
+            intent.putExtra("exp_desc",expert.expert_description)
+            intent.putExtra("exp_image",image)
+            intent.putExtra("exp_rate",expert.expert_rate_per_min)
+            intent.putExtra("exp_status",expert.expert_work_status)
+            intent.putExtra("exp_experience",expert.expert_experience)
+            context.startActivity(intent)
+
+
+        }
 
 
     }
@@ -78,6 +90,7 @@ val itemList : ArrayList<Expert>
         val expExpert : TextView = view.findViewById(R.id.expExpert)
         val expertStatus : TextView = view.findViewById(R.id.expertStatus)
         val rateExpert : TextView = view.findViewById(R.id.rateExpert)
+        val llContainer : LinearLayout = view.findViewById(R.id.llContainer)
 
 
     }
