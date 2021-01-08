@@ -2,19 +2,25 @@ package com.example.vedicguruji.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vedicguruji.R
 import com.example.vedicguruji.activity.DescriptionActivity
+import com.example.vedicguruji.activity.OtpLoginActivity
 import com.example.vedicguruji.model.Expert
 import com.squareup.picasso.Picasso
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
+
 
 class HomeRecyclerAdapter(
 
@@ -37,8 +43,18 @@ val itemList : ArrayList<Expert>
         val exp : String = expert.expert_experience
         val rate : String = expert.expert_rate_per_min
         val status: String = expert.expert_work_status.toUpperCase(Locale.ROOT)
+
         val img = expert.expert_img
         var finalImg:String = ""
+        if(status == "AVAILABLE"){
+            holder.expertStatus.setTextColor(Color.parseColor("#3BB44A"))
+        }
+
+        if(status == "OFFLINE"){
+            holder.expertStatus.setTextColor(Color.parseColor("#DA4F49"))
+        }
+
+
 
 
 
@@ -47,7 +63,7 @@ val itemList : ArrayList<Expert>
         finalImg   = img.substring(0,7) + img.substring(7,16) + img.substring(16)
 
 
-        println(finalImg)
+
 
 
 
@@ -59,22 +75,38 @@ val itemList : ArrayList<Expert>
 
 
 
+
         Picasso.get().load(image).error(R.drawable.people_icon).into(holder.imgExpert)
 
         holder.llContainer.setOnClickListener {
 
 
 
+
             val intent = Intent(context , DescriptionActivity::class.java)
-            intent.putExtra("exp_name" , expert.expert_name)
-            intent.putExtra("exp_desc",expert.expert_description)
+            intent.putExtra("position",position.toString())
+
+//            intent.putExtra("exp_name" , expert.expert_name)
+//            intent.putExtra("exp_desc",expert.expert_description)
             intent.putExtra("exp_image",image)
-            intent.putExtra("exp_rate",expert.expert_rate_per_min)
-            intent.putExtra("exp_status",expert.expert_work_status)
-            intent.putExtra("exp_experience",expert.expert_experience)
+//            intent.putExtra("exp_rate",expert.expert_rate_per_min)
+//            intent.putExtra("exp_status",expert.expert_work_status)
+//            intent.putExtra("exp_experience",expert.expert_experience)
+//            intent.putExtra("exp_desc",expert.expert_description)
+
+//            fun JSONArray.toMutableList(): MutableList<JSONObject> = MutableList(length(), this::getJSONObject)
+//            intent.putExtra("exp_comments",expert.expert_comments.toString())
+
+
+
             context.startActivity(intent)
 
 
+        }
+
+        holder.imgCall.setOnClickListener {
+            val intent = Intent(context,OtpLoginActivity::class.java)
+            context.startActivity(intent);
         }
 
 
@@ -91,9 +123,12 @@ val itemList : ArrayList<Expert>
         val expertStatus : TextView = view.findViewById(R.id.expertStatus)
         val rateExpert : TextView = view.findViewById(R.id.rateExpert)
         val llContainer : LinearLayout = view.findViewById(R.id.llContainer)
+        val imgCall : ImageView = view.findViewById(R.id.imgCall)
 
 
     }
+
+
 
 }
 

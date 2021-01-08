@@ -2,12 +2,19 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.viewpager2.widget.ViewPager2
+
+        android:id="@+id/viewPagerImageSlider"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
         android:padding="5dp"
-        android:layout_margin="5dp"/>
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"

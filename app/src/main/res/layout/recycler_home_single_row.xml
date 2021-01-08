@@ -120,6 +120,7 @@ app:cardCornerRadius="10dp"
                 android:orientation="vertical"
                 >
                 <TextView
+
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:padding="5dp"
@@ -127,6 +128,7 @@ app:cardCornerRadius="10dp"
                     android:textAlignment="viewStart"
                     android:text="CALL"/>
                 <ImageView
+                    android:id="@+id/imgCall"
                     android:padding="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

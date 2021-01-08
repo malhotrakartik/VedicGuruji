@@ -17,12 +17,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.vedicguruji.R
 import com.example.vedicguruji.adapter.HomeRecyclerAdapter
+import com.example.vedicguruji.adapter.ImageSliderAdapter
 import com.example.vedicguruji.model.Expert
+import com.example.vedicguruji.model.SlideItem
 import com.example.vedicguruji.utils.ConnectionManager
 import org.json.JSONException
 
@@ -31,11 +34,14 @@ class HomeFragment : Fragment() {
     lateinit var layoutManager: RecyclerView.LayoutManager
 
     lateinit var recyclerAdapter: HomeRecyclerAdapter
+    lateinit var viewPagerImageSlider : ViewPager2
 
 
     lateinit var progressLayout: RelativeLayout
     lateinit var progressBar: ProgressBar
     val expertInfoList = arrayListOf<Expert>()
+
+    private var imageSlider = ImageSliderAdapter(listOf(SlideItem("hello","https://www.imagesource.com/wp-content/uploads/2019/06/Rio.jpg"),SlideItem("hello","https://www.imagesource.com/wp-content/uploads/2019/06/Rio.jpg")))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +52,11 @@ class HomeFragment : Fragment() {
 
         recyclerHome = view.findViewById(R.id.recyclerHome)
         layoutManager = LinearLayoutManager(activity)
+        viewPagerImageSlider = view.findViewById(R.id.viewPagerImageSlider)
 
         progressBar = view.findViewById(R.id.progressBar)
         progressLayout = view.findViewById(R.id.progressLayout)
+        viewPagerImageSlider.adapter = imageSlider
 
         progressLayout.visibility = View.VISIBLE
         val queue = Volley.newRequestQueue(activity as Context)
@@ -73,6 +81,10 @@ class HomeFragment : Fragment() {
                                 expertJsonObject.getString("rate_per_min"),
                                 expertJsonObject.getString("experience"),
                                 expertJsonObject.getString("description")
+//
+
+
+
 
 
                             )

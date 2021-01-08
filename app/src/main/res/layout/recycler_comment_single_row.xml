@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_constraintCircleRadius="10dp"
+
+
+    >
+    <LinearLayout
+        android:id="@+id/llName"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/nameComment"
+            android:layout_weight="5"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="rating"
+                android:id="@+id/commentRating"/>
+
+            <RatingBar
+
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+
+
+
+                android:numStars="5"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                />
+
+        </RelativeLayout>
+        
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llName"/>
+
+
+
+    
+
+</RelativeLayout>
