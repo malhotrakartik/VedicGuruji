@@ -1,6 +1,5 @@
 package com.example.vedicguruji.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.vedicguruji.R
 import com.shuhart.stepview.StepView
@@ -55,14 +55,16 @@ class OtpLoginActivity : AppCompatActivity() {
             val url = "https://vedicguruji.com/api/customer_login_verification"
 
             val jsonParams = JSONObject()
+            jsonParams.put("action","send_otp")
             jsonParams.put("mobile_number",etEnterNumber.text)
 
-            val jsonRequest =
-                object : JsonObjectRequest(Request.Method.POST, url, jsonParams, Response.Listener {
+
+            val stringRequest : StringRequest =object :
+                 StringRequest(Request.Method.POST, url, Response.Listener {
 
                     try{
-                        val success = it.getInt("status")
-                        if(success == 1){
+                        val success = it[0].toInt()
+                        if(success == 123){
                             Toast.makeText(this@OtpLoginActivity,"Otp Sent",Toast.LENGTH_LONG).show()
                             rlSendOtp.visibility = View.GONE;
                             rlVerifyOtp.visibility = View.VISIBLE;
@@ -70,9 +72,10 @@ class OtpLoginActivity : AppCompatActivity() {
 
 
                         }else{
+
                             Toast.makeText(
                                 this@OtpLoginActivity,
-                                "Some Error Occured!,Try Again",
+                                "some error occurred $success",
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -98,18 +101,34 @@ class OtpLoginActivity : AppCompatActivity() {
 
 
                 })            {
+
+
                     override fun getHeaders(): MutableMap<String, String> {
                         val headers = HashMap<String , String>()
 
-                        headers["Content-type"] = ""
+                        headers["Content-type"] = "application/x-www-form-urlencoded"
                         headers["token"] = ""
                         return headers
 
 
 
                     }
+                override fun getBodyContentType(): String? {
+                    return "application/x-www-form-urlencoded; charset=UTF-8"
                 }
-            queue.add(jsonRequest)
+
+                    override fun getParams(): MutableMap<String, String> {
+
+                        val params = HashMap<String , String>()
+
+                        params["action"] = "send_otp"
+                        params["mobile_number"] = etEnterNumber.text.toString()
+                        return params
+
+
+                    }
+                }
+            queue.add(stringRequest)
 
 
 
@@ -121,17 +140,21 @@ class OtpLoginActivity : AppCompatActivity() {
 
             val jsonParams = JSONObject()
             jsonParams.put("mobile_number",etEnterNumberAgain.text)
+            jsonParams.put("action","verify_otp")
+            jsonParams.put("otp_value",etEnterOtp.text)
 
-            val jsonRequest =
-                object : JsonObjectRequest(Request.Method.POST, url, jsonParams, Response.Listener {
+            val stringRequest : StringRequest =
+                object : StringRequest(Request.Method.POST, url, Response.Listener {
 
                     try{
-                        val success = it.getInt("status")
-                        if(success == 1){
-                            Toast.makeText(this@OtpLoginActivity,"Otp Sent",Toast.LENGTH_LONG).show()
+                        val success = it[0].toInt()
+                        if(success == 123){
+
                             rlSendOtp.visibility = View.GONE;
-                            rlVerifyOtp.visibility = View.VISIBLE;
-                            stepView.go(1,false);
+                            rlVerifyOtp.visibility = View.GONE;
+                            stepView.go(2,false);
+                            Toast.makeText(this@OtpLoginActivity,"number verified",Toast.LENGTH_LONG).show()
+
 
 
                         }else{
@@ -163,6 +186,8 @@ class OtpLoginActivity : AppCompatActivity() {
 
 
                 })            {
+
+
                     override fun getHeaders(): MutableMap<String, String> {
                         val headers = HashMap<String , String>()
 
@@ -173,8 +198,24 @@ class OtpLoginActivity : AppCompatActivity() {
 
 
                     }
+
+                    override fun getBodyContentType(): String? {
+                        return "application/x-www-form-urlencoded; charset=UTF-8"
+                    }
+
+                    override fun getParams(): MutableMap<String, String> {
+
+                        val params = HashMap<String , String>()
+
+                        params["action"] = "verify_otp"
+                        params["mobile_number"] = etEnterNumberAgain.text.toString()
+                        params["otp_value"] = etEnterOtp.text.toString()
+                        return params
+
+
+                    }
                 }
-            queue.add(jsonRequest)
+            queue.add(stringRequest)
 
         }
 

@@ -1,14 +1,10 @@
 package com.example.vedicguruji.activity
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
-import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
@@ -16,13 +12,10 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.vedicguruji.R
 import com.example.vedicguruji.adapter.CommentRecyclerAdapter
-import com.example.vedicguruji.adapter.HomeRecyclerAdapter
 import com.example.vedicguruji.model.Comment
-import com.example.vedicguruji.model.Expert
 import com.squareup.picasso.Picasso
 import org.json.JSONArray
 import org.json.JSONException
-import org.w3c.dom.Text
 
 class DescriptionActivity : AppCompatActivity() {
     lateinit var toolbar : androidx.appcompat.widget.Toolbar
@@ -61,23 +54,6 @@ class DescriptionActivity : AppCompatActivity() {
 
         val position = intent.getStringExtra("position")
         StartDescriptionActivity(position)
-
-
-
-
-        Toast.makeText(this@DescriptionActivity,position,Toast.LENGTH_LONG).show()
-
-//         val comments  = intent.getStringExtra("exp_comments")
-
-
-
-
-
-
-
-
-
-
     }
 
     fun StartDescriptionActivity(position : String){
@@ -153,6 +129,7 @@ class DescriptionActivity : AppCompatActivity() {
 
 
                 })            {
+
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String , String>()
 
@@ -163,6 +140,8 @@ class DescriptionActivity : AppCompatActivity() {
 
 
                 }
+
+
             }
         queue.add(jsonObjectRequest)
 

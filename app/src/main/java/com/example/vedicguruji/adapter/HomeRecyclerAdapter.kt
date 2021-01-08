@@ -86,16 +86,9 @@ val itemList : ArrayList<Expert>
             val intent = Intent(context , DescriptionActivity::class.java)
             intent.putExtra("position",position.toString())
 
-//            intent.putExtra("exp_name" , expert.expert_name)
-//            intent.putExtra("exp_desc",expert.expert_description)
-            intent.putExtra("exp_image",image)
-//            intent.putExtra("exp_rate",expert.expert_rate_per_min)
-//            intent.putExtra("exp_status",expert.expert_work_status)
-//            intent.putExtra("exp_experience",expert.expert_experience)
-//            intent.putExtra("exp_desc",expert.expert_description)
 
-//            fun JSONArray.toMutableList(): MutableList<JSONObject> = MutableList(length(), this::getJSONObject)
-//            intent.putExtra("exp_comments",expert.expert_comments.toString())
+            intent.putExtra("exp_image",image)
+
 
 
 

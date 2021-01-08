@@ -22,8 +22,10 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.vedicguruji.R
+import com.example.vedicguruji.adapter.CommentRecyclerAdapter
 import com.example.vedicguruji.adapter.HomeRecyclerAdapter
-import com.example.vedicguruji.adapter.ImageSliderAdapter
+import com.example.vedicguruji.adapter.LiveRecyclerAdapter
+
 import com.example.vedicguruji.model.Expert
 import com.example.vedicguruji.model.SlideItem
 import com.example.vedicguruji.utils.ConnectionManager
@@ -31,17 +33,19 @@ import org.json.JSONException
 
 class HomeFragment : Fragment() {
     lateinit var recyclerHome: RecyclerView
+    lateinit var recyclerLive : RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
+    lateinit var liveLayoutManager: LinearLayoutManager
 
     lateinit var recyclerAdapter: HomeRecyclerAdapter
-    lateinit var viewPagerImageSlider : ViewPager2
+    lateinit var liveRecyclerAdapter: LiveRecyclerAdapter
 
 
     lateinit var progressLayout: RelativeLayout
     lateinit var progressBar: ProgressBar
     val expertInfoList = arrayListOf<Expert>()
+    val liveInfoList = arrayListOf<SlideItem>()
 
-    private var imageSlider = ImageSliderAdapter(listOf(SlideItem("hello","https://www.imagesource.com/wp-content/uploads/2019/06/Rio.jpg"),SlideItem("hello","https://www.imagesource.com/wp-content/uploads/2019/06/Rio.jpg")))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,12 +55,34 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         recyclerHome = view.findViewById(R.id.recyclerHome)
+        recyclerLive = view.findViewById(R.id.recyclerLive)
+
         layoutManager = LinearLayoutManager(activity)
-        viewPagerImageSlider = view.findViewById(R.id.viewPagerImageSlider)
+        liveLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+
+        for (j in 0 until 5){
+
+            val liveObject = SlideItem(
+                "hello",
+                "https://www.imagesource.com/wp-content/uploads/2019/06/Rio.jpg"
+            )
+            liveInfoList.add(liveObject)
+
+            liveRecyclerAdapter = LiveRecyclerAdapter(activity as Context,liveInfoList)
+            recyclerLive.adapter = liveRecyclerAdapter
+            recyclerLive.layoutManager = liveLayoutManager
+
+        }
+
+
+
+
+
+
 
         progressBar = view.findViewById(R.id.progressBar)
         progressLayout = view.findViewById(R.id.progressLayout)
-        viewPagerImageSlider.adapter = imageSlider
+
 
         progressLayout.visibility = View.VISIBLE
         val queue = Volley.newRequestQueue(activity as Context)
